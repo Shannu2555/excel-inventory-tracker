@@ -46,4 +46,4 @@ The test data is Chen, D. (2015), *Online Retail*, UCI Machine Learning Reposito
 
 The code is MIT licensed. See [LICENSE](LICENSE).
 
-Made by Shannu, a mechanical engineering student who likes automating boring work.
+Made by Shanmukh Narayana Chaganti, a mechanical engineering student who likes automating boring work.
