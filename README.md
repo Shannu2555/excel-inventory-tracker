@@ -4,6 +4,8 @@ A formula-driven Excel workbook that tracks stock in and out, flags low and out-
 
 ![Dashboard](docs/step4_dashboard.png)
 
+[▶ Watch the 38-second demo video](docs/demo.mp4)
+
 ## Problem
 Small sellers often track stock in an ad-hoc sheet. They find out an item is out of stock only when an order fails, and there's no single view of what to reorder.
 
