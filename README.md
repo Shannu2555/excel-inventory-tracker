@@ -1,47 +1,49 @@
-# Excel Inventory Tracker with Low-Stock Alerts
+# Excel Inventory Tracker
 
-A formula-driven Excel workbook that tracks stock in and out, flags low and out-of-stock items, and shows a reorder dashboard. It's generated in Python and demoed on real sales data.
+I built this for small online sellers who keep stock in a messy sheet and only find out something is out of stock when an order fails. It's a plain Excel file with formulas, alerts and a reorder dashboard. I generate it with Python so I can rebuild it quickly for each client.
+
+[Watch the 38-second demo video](docs/demo.mp4)
 
 ![Dashboard](docs/step4_dashboard.png)
 
-[▶ Watch the 38-second demo video](docs/demo.mp4)
+## What's inside
 
-## Problem
-Small sellers often track stock in an ad-hoc sheet. They find out an item is out of stock only when an order fails, and there's no single view of what to reorder.
+There are five sheets. How-To explains how to use it in simple steps. Products is the SKU list, and stock, status and days of stock left are worked out by formula. Stock In is where you log deliveries, and stock marked as incoming isn't counted until it arrives. Sales has a SKU dropdown and fills in price and revenue by itself. Dashboard shows the totals, a low-stock list and a stock vs reorder level chart.
 
-## Solution
-`build_tracker.py` (Python + openpyxl) generates `inventory_tracker.xlsx` with 5 sheets:
-- **How-To**: step-by-step instructions for the client
-- **Products**: SKU master; received, sold, current stock and status are calculated by formulas
-- **Stock In**: receipts log with a dropdown-validated SKU column
-- **Sales**: sales log; unit price, revenue and product name fill in automatically
-- **Dashboard**: KPIs, low-stock list and a stock-vs-reorder bar chart, with conditional formatting (OK / LOW / OUT)
+Rows turn yellow when stock reaches the reorder level and red when it hits zero. There are no macros.
 
-It needs no macros and works in Excel and LibreOffice.
+## How I tested it
 
-## Results (real data demo)
-The 15 best-selling products (by number of invoices) from the **UCI Online Retail** dataset, with their **real daily sales from 1 Nov to 9 Dec 2011: 704 sales rows, 57,598 units**.
+I didn't want to show fake numbers, so I used real sales from the UCI Online Retail dataset, which comes from a UK gift shop. I took its 15 most-ordered products and their actual daily sales from 1 Nov to 9 Dec 2011. That's 704 rows and 57,598 units.
 
-Status on 9 Dec 2011: **5 out of stock, 3 low, 7 healthy**.
+On 9 Dec 2011 the tracker showed 5 products out of stock, 3 low and 7 fine.
 
-> **Assumptions.** The dataset has sales but no stock or cost figures, so these are modelled. Opening stock on 1 Nov 2011 = 60 days of average daily demand (Dec 2010 to Oct 2011). Reorder level = 14 days of demand. Unit cost = 60% of the average selling price. Stock can't go below 0. The stock levels shown are therefore a simulation driven by real sales, not a real warehouse count.
+To be honest about one thing: the dataset only has sales. It has no stock or cost figures, so I had to assume those. I set opening stock on 1 Nov 2011 to 60 days of average daily demand (based on Dec 2010 to Oct 2011). The reorder level is 14 days of demand, and cost is 60% of the average selling price. So the stock levels are a simulation driven by real sales, not a real warehouse count.
 
-## Quick start
-Just open `inventory_tracker.xlsx` to use the demo. To rebuild it:
+## Try it
+
+To see the demo, just open `inventory_tracker.xlsx`. To rebuild it:
+
 ```bash
 pip install -r requirements.txt
-python build_tracker.py                               # uses data/real_data.json (committed, 37 KB)
-# optional, regenerate data/real_data.json from the raw dataset:
+python build_tracker.py                  # uses data/real_data.json (37 KB, in the repo)
+# optional, to rebuild real_data.json from the original dataset:
 python scripts/download_data.py && python scripts/prep_real_data.py
 ```
-To use it for your own shop, clear the demo rows and enter your own products, stock-in and sales.
+
+To use it for your own shop, delete the demo rows and type in your products, deliveries and sales.
 
 ## Screenshots
+
 | | |
 |---|---|
 | ![Input](docs/step1_input.png) | ![Build](docs/step2_build.png) |
 | ![Output](docs/step3_output.png) | ![Dashboard](docs/step4_dashboard.png) |
 
-## Data source & licence
-- Demo data: Chen, D. (2015). *Online Retail* [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5BW33, licensed **CC BY 4.0**. `data/real_data.json` is a derived extract (top-15 products, daily totals). The raw file is not committed.
-- Code: MIT licence, see [LICENSE](LICENSE).
+## Data and licence
+
+The test data is Chen, D. (2015), *Online Retail*, UCI Machine Learning Repository, https://doi.org/10.24432/C5BW33, licensed CC BY 4.0. `data/real_data.json` is my small extract of it, with the top 15 products and their daily totals. The raw file isn't in the repo.
+
+The code is MIT licensed. See [LICENSE](LICENSE).
+
+Made by Shannu, a mechanical engineering student who likes automating boring work.
